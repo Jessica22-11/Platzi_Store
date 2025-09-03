@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">🛒 Crear Producto</h2>
+
+    <!-- Mensajes de éxito o error -->
+    {% if success %}
+    <div class="alert alert-success text-center shadow-sm" role="alert">
+        {{ success }}
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="alert alert-danger text-center shadow-sm" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <div class="card shadow-lg border-0 rounded-4 p-4 mx-auto" style="max-width: 600px;">
+        <form method="POST" novalidate class="needs-validation">
+            {% csrf_token %}
+            
+            <div class="form-floating mb-3">
+                {{ form.title }}
+                <label for="{{ form.title.id_for_label }}">Título</label>
+                {% if form.title.errors %}
+                    <div class="text-danger small">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form.price }}
+                <label for="{{ form.price.id_for_label }}">Precio</label>
+                {% if form.price.errors %}
+                    <div class="text-danger small">{{ form.price.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form.description }}
+                <label for="{{ form.description.id_for_label }}">Descripción</label>
+                {% if form.description.errors %}
+                    <div class="text-danger small">{{ form.description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form.categoryId }}
+                <label for="{{ form.categoryId.id_for_label }}">Categoría</label>
+                {% if form.categoryId.errors %}
+                    <div class="text-danger small">{{ form.categoryId.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-floating mb-4">
+                {{ form.image_url }}
+                <label for="{{ form.image_url.id_for_label }}">URL de la Imagen</label>
+                {% if form.image_url.errors %}
+                    <div class="text-danger small">{{ form.image_url.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'products:list_products' %}" class="btn btn-outline-secondary">
+                    ⬅️ Volver a Productos
+                </a>
+                <button type="submit" class="btn btn-success">
+                    ✅ Guardar Producto
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="mb-4 text-center">📦 Lista de Productos</h2>
+
+{% if error %}
+    <div class="alert alert-danger text-center">{{ error }}</div>
+{% else %}
+    <div class="row g-4">
+        {% for p in products %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card h-100 shadow-sm border-0 product-card">
+                <img src="{{ p.images.0 }}" class="card-img-top" alt="{{ p.title }}" style="height:200px; object-fit:cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="card-text text-muted">{{ p.description|truncatewords:20 }}</p>
+                    <p class="fw-bold text-success mt-auto">${{ p.price }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}
+
