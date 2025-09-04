@@ -7,8 +7,9 @@ from .forms import ProductForm
 
 base_url = "https://api.escuelajs.co/api/v1/products"
 
-def products_home(request):
-    return render(request, "base.html")
+def home(request):
+    return render(request, "home.html")
+
 
 def list_products(request):
     try:
@@ -34,7 +35,6 @@ def list_products(request):
             "error": f"⚠️ Error inesperado: {str(e)}"
         })
 
-@csrf_exempt
 @csrf_exempt
 def create_product(request):
     if request.method == "POST":
