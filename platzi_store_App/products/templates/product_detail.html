@@ -17,8 +17,15 @@
 
                 <div class="col-md-6">
                     <h2 class="product-title mb-3">{{ product.title }}</h2>
-                    <p class="text-muted">{{ product.description }}</p>
-                    <p><strong>Categoría:</strong> {{ product.category.name }}</p>
+
+                    <p><strong>🆔 ID del Producto:</strong> {{ product.id }}</p>
+
+                    <!-- Descripción con etiqueta y emoji -->
+                    <p><strong>📝 Descripción:</strong> {{ product.description }}</p>
+
+                    <!-- Categoría con etiqueta y emoji -->
+                    <p><strong>📂 Categoría:</strong> {{ product.category.name }}</p>
+
                     <p class="fw-bold text-success fs-4">💲 {{ product.price }}</p>
 
                     <div class="mt-4">
@@ -34,3 +41,4 @@
 </div>
 
 {% endblock %}
+

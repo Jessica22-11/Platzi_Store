@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2 class="mb-4 text-center">📦 Lista de Productos</h2>
+<h2 class="mb-4 text-center">🛍️ Lista de Productos</h2>
 
 {% if messages %}
     {% for message in messages %}
@@ -10,7 +10,6 @@
         </div>
     {% endfor %}
 {% endif %}
-
 
 {% if error %}
     <div class="alert alert-danger text-center">{{ error }}</div>
@@ -21,10 +20,29 @@
             <div class="card h-100 shadow-sm border-0 product-card">
                 <img src="{{ p.images.0 }}" class="card-img-top" alt="{{ p.title }}" style="height:200px; object-fit:cover;">
                 <div class="card-body d-flex flex-column">
+                    
                     <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="text-muted mb-1">🆔 <strong>ID:</strong> {{ p.id }}</p>
+                    
                     <p class="card-text text-muted">{{ p.description|truncatewords:20 }}</p>
                     <p class="fw-bold text-success mt-auto">${{ p.price }}</p>
-                    <a href="{% url 'products:product_detail' p.id %}" class="stretched-link"></a>
+
+                    <!-- Botones -->
+                    <div class="d-flex justify-content-center mt-3 gap-2">
+                    <a href="{% url 'products:product_detail' p.id %}" class="btn btn-sm btn-outline-primary">
+                        👁 Ver
+                    </a>
+                    <a href="{% url 'products:update_product' p.id %}" class="btn btn-sm btn-outline-warning">
+                        ✏️ Editar
+                    </a>
+                    <form method="POST" action="{% url 'products:delete_product' p.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('¿Seguro que quieres eliminar este producto?');">
+                            🗑 Eliminar
+                        </button>
+                    </form>
+                </div>
                 </div>
             </div>
         </div>
@@ -32,5 +50,15 @@
     </div>
 {% endif %}
 
-{% endblock %}
+<script>
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.style.transition = "opacity 0.5s ease-out";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
 
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="product-title mb-4">📝Editar Producto</h2>
+
+    {% if error %}
+        <div class="alert alert-danger text center">{{ error }}</div>
+    {% endif %}
+
+    <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'products:list_products' %}" class="btn btn-secondary">⬅ Volver</a>
+                <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
