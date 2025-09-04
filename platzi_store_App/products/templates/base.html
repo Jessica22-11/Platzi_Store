@@ -15,7 +15,6 @@
             object-fit: cover;
             border-radius: 1rem;
         }
-        <>
 /* Animación hover para las cards */
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -31,16 +30,21 @@
 </head>
 <body class="bg-light">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'products:products_home' %}">🛍️ Platzi Store</a>
-            <div>
-                <a class="btn btn-outline-light me-2" href="{% url 'products:list_products' %}">Ver Productos</a>
-                <a class="btn btn-light text-primary" href="{% url 'products:create_product' %}">Crear Producto</a>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #6f42c1; padding-top: 0.3rem; padding-bottom: 0.3rem;">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'products:products_home' %}">
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081986.png" alt="Logo" width="24" height="24" class="me-2">
+            Platzi Store
+        </a>
+
+        <!-- Barra de búsqueda -->
+        <form class="d-flex" method="get" action="{% url 'products:search_products' %}">
+            <input class="form-control form-control-sm me-2" type="search" name="q" placeholder="Buscar por ID de producto" aria-label="Buscar">
+            <button class="btn btn-light btn-sm text-primary" type="submit">🔍 Buscar</button>
+        </form>
+    </div>
+</nav>
+
 
     <!-- Contenido principal -->
     <main class="container mt-4">

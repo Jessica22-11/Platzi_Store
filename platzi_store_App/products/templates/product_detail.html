@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    {% if error %}
+        <div class="alert alert-danger text-center">{{ error }}</div>
+    {% else %}
+        <div class="card shadow-lg border-0 rounded-4 mx-auto p-4" style="max-width: 900px;">
+            <div class="row g-4 align-items-center">
+                
+                <!-- Imagen -->
+                <div class="col-md-6">
+                    <img src="{{ product.images.0 }}" 
+                        class="img-fluid rounded-4 shadow-sm" 
+                        alt="{{ product.title }}" 
+                        style="max-height: 400px; object-fit: cover; width: 100%;">
+                </div>
+
+                <!-- Detalles -->
+                <div class="col-md-6">
+                    <h2 class="text-primary mb-3">{{ product.title }}</h2>
+                    <p class="text-muted">{{ product.description }}</p>
+                    <p><strong>Categoría:</strong> {{ product.category.name }}</p>
+                    <p class="fw-bold text-success fs-4">💲 {{ product.price }}</p>
+
+                    <div class="mt-4">
+                        <a href="{% url 'products:list_products' %}" class="btn btn-outline-secondary">
+                            ⬅️ Volver a Productos
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

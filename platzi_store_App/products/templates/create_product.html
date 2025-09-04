@@ -2,20 +2,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4 text-center text-primary">🛒 Crear Producto</h2>
-
-    <!-- Mensajes de éxito o error -->
-    {% if success %}
-    <div class="alert alert-success text-center shadow-sm" role="alert">
-        {{ success }}
-    </div>
-    {% endif %}
-
-    {% if error %}
-    <div class="alert alert-danger text-center shadow-sm" role="alert">
-        {{ error }}
-    </div>
-    {% endif %}
+    <h2 class="mb-4 text-center" style="color: purple;">🛒 Crear Producto</h2>
 
     <div class="card shadow-lg border-0 rounded-4 p-4 mx-auto" style="max-width: 600px;">
         <form method="POST" novalidate class="needs-validation">
