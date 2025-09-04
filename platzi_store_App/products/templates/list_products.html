@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="d-flex align-items-center justify-content-between mb-4">
-    <a href="{% url 'products:home' %}" class="btn" style="background-color:#6f42c1; color:white; font-weight:bold;">
-        ↩ Volver al Inicio
-    </a>
-    <h2 class="text-center flex-grow-1">🛍️ Lista de Productos</h2>
+<div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom position-relative">
+    <div>
+        <a href="{% url 'products:home' %}" class="btn" style="background-color:#6f42c1; color:white; font-weight:bold;">
+            ↩ Volver al Inicio
+        </a>
+        <a href="{% url 'products:create_product' %}" class="btn btn-link text-decoration-none ms-2 btn-link-hover-dark">
+            🛒 Crear Producto
+        </a>
+    </div>
+    <h2 class="position-absolute start-50 translate-middle-x">🛍️ Lista de Productos</h2>
 </div>
-
 
 
 {% if messages %}
@@ -34,22 +38,21 @@
                     <p class="card-text text-muted">{{ p.description|truncatewords:20 }}</p>
                     <p class="fw-bold text-success mt-auto">${{ p.price }}</p>
 
-                    <!-- Botones -->
                     <div class="d-flex justify-content-center mt-3 gap-2">
-                    <a href="{% url 'products:product_detail' p.id %}" class="btn btn-sm btn-outline-primary">
-                        👁 Ver
-                    </a>
-                    <a href="{% url 'products:update_product' p.id %}" class="btn btn-sm btn-outline-warning">
-                        ✏️ Editar
-                    </a>
-                    <form method="POST" action="{% url 'products:delete_product' p.id %}" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                            onclick="return confirm('¿Seguro que quieres eliminar este producto?');">
-                            🗑 Eliminar
-                        </button>
-                    </form>
-                </div>
+                        <a href="{% url 'products:product_detail' p.id %}" class="btn btn-sm btn-outline-primary">
+                            👁 Ver
+                        </a>
+                        <a href="{% url 'products:update_product' p.id %}" class="btn btn-sm btn-outline-warning">
+                            ✏️ Editar
+                        </a>
+                        <form method="POST" action="{% url 'products:delete_product' p.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('¿Seguro que quieres eliminar este producto?');">
+                                🗑 Eliminar
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

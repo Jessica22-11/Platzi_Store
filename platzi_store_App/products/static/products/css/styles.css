@@ -31,3 +31,11 @@ footer {
     text-align: center;
     padding: 15px;
 }
+
+.btn-link-hover-dark {
+    color: #6c757d; 
+    transition: color 0.2s ease-in-out;
+}
+.btn-link-hover-dark:hover {
+    color: #343a40 !important; 
+}
