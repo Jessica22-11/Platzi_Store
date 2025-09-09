@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div>
+        <a href="{% url 'products:home' %}" class="btn" style="background-color:#6f42c1; color:white; font-weight:bold;">
+            ↩ Volver al Inicio
+        </a>
+    </div>
+
 <h2 class="mb-4 text-center">🔍 Resultados de búsqueda: "{{ query }}"</h2>
 
 {% if error %}
@@ -27,4 +33,3 @@
 {% endif %}
 
 {% endblock %}
-

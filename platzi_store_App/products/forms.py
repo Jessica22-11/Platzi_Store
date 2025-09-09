@@ -15,10 +15,10 @@ class ProductForm(forms.Form):
         label="Descripcion",
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows':3})
     )
-    categoryId = forms.IntegerField(
-        label="ID de la categoria",
-        min_value=1,
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    categoryId = forms.ChoiceField(
+        label="Categoría",
+        choices=[],  # 👈 se llenará dinámicamente en la vista
+        widget=forms.Select(attrs={'class': 'form-select'})
     )
     image_url = forms.URLField(
         label= "URL de la imagen",

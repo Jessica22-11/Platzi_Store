@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!-- Header con título y acciones -->
 <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom position-relative">
     <div>
         <a href="{% url 'products:home' %}" class="btn" style="background-color:#6f42c1; color:white; font-weight:bold;">
             ↩ Volver al Inicio
         </a>
-        <a href="{% url 'products:create_product' %}" class="btn btn-link text-decoration-none ms-2 btn-link-hover-dark">
-            🛒 Crear Producto
-        </a>
     </div>
-    <h2 class="position-absolute start-50 translate-middle-x">🛍️ Lista de Productos</h2>
+    <h2 class="position-absolute start-50 translate-middle-x fw-bold">🛍️ Lista de Productos</h2>
 </div>
 
-
+<!-- Mensajes -->
 {% if messages %}
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} text-center" role="alert">
@@ -22,29 +20,41 @@
     {% endfor %}
 {% endif %}
 
+<!-- Si hubo error -->
 {% if error %}
     <div class="alert alert-danger text-center">{{ error }}</div>
 {% else %}
+    <!-- Grid de productos -->
     <div class="row g-4">
         {% for p in products %}
         <div class="col-md-4 col-sm-6">
             <div class="card h-100 shadow-sm border-0 product-card">
-                <img src="{{ p.images.0 }}" class="card-img-top" alt="{{ p.title }}" style="height:200px; object-fit:cover;">
+                
+                <!-- Imagen -->
+                {% if p.images and p.images.0 %}
+                    <img src="{{ p.images.0 }}" class="card-img-top" alt="{{ p.title }}" style="height:200px; object-fit:cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x200?text=Sin+Imagen" class="card-img-top" alt="Sin Imagen">
+                {% endif %}
+
                 <div class="card-body d-flex flex-column">
-                    
-                    <h5 class="card-title">{{ p.title }}</h5>
+                    <h5 class="card-title text-truncate">{{ p.title }}</h5>
                     <p class="text-muted mb-1">🆔 <strong>ID:</strong> {{ p.id }}</p>
                     
                     <p class="card-text text-muted">{{ p.description|truncatewords:20 }}</p>
                     <p class="fw-bold text-success mt-auto">${{ p.price }}</p>
 
+                    <!-- Botones -->
                     <div class="d-flex justify-content-center mt-3 gap-2">
+                        <!-- Ver -->
                         <a href="{% url 'products:product_detail' p.id %}" class="btn btn-sm btn-outline-primary">
                             👁 Ver
                         </a>
+                        <!-- Editar -->
                         <a href="{% url 'products:update_product' p.id %}" class="btn btn-sm btn-outline-warning">
                             ✏️ Editar
                         </a>
+                        <!-- Eliminar -->
                         <form method="POST" action="{% url 'products:delete_product' p.id %}" class="d-inline">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-sm btn-outline-danger"
@@ -60,7 +70,10 @@
     </div>
 {% endif %}
 
+<!-- Scripts -->
+{% block extra_scripts %}
 <script>
+    // Desaparecer alertas automáticamente
     setTimeout(function() {
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(alert => {
@@ -69,6 +82,21 @@
             setTimeout(() => alert.remove(), 500);
         });
     }, 3000);
+
+    // Animación de las tarjetas
+    document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".product-card");
+        cards.forEach((card, index) => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                card.style.transition = "all 0.6s ease";
+                card.style.opacity = "1";
+                card.style.transform = "translateY(0)";
+            }, index * 150);
+        });
+    });
 </script>
+{% endblock %}
 
 {% endblock %}

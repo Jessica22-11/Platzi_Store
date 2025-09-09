@@ -6,9 +6,6 @@
         <a href="{% url 'products:home' %}" class="btn" style="background-color:#6f42c1; color:white; font-weight:bold;">
             ↩ Volver al Inicio
         </a>
-        <a href="{% url 'products:list_products' %}" class="btn btn-link text-decoration-none ms-2 btn-link-hover-dark">
-            🛍️ Lista De Productos
-        </a>
     </div>
     <h2 class="position-absolute start-50 translate-middle-x"style="color: purple;">🛒Crear Producto</h2>
 </div>
@@ -45,7 +42,7 @@
                 {% endif %}
             </div>
 
-            <!-- Categoría -->
+                        <!-- Categoría -->
             <div class="mb-3">
                 <label for="{{ form.categoryId.id_for_label }}" class="form-label">📂 Categoría</label>
                 {{ form.categoryId }}
@@ -53,6 +50,7 @@
                     <div class="text-danger small">{{ form.categoryId.errors }}</div>
                 {% endif %}
             </div>
+
 
             <!-- URL Imagen -->
             <div class="mb-4">
@@ -76,5 +74,3 @@
     </div>
 </div>
 {% endblock %}
-
-

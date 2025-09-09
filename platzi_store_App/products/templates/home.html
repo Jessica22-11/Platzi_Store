@@ -1,20 +1,102 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card shadow-lg p-4 text-center menu-card">
-    <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" 
-            alt="Platzi Store" class="mx-auto d-block mb-3" width="150">
+<!-- Bienvenida arriba -->
+<div class="text-center my-4">
+    <h2 class="fw-bold">Bienvenido a 🛒 Platzi Store</h2>
+    <p class="text-muted">Explora productos de la API de Platzi, crea los tuyos y encuentra lo que necesitas.</p>
+</div>
 
-    <h2 class="mb-3">Bienvenido a 🛒 Platzi Store</h2>
-    <p class="text-muted">Aquí puedes explorar productos de la API de Platzi, ver la lista completa o crear nuevos productos.</p>
+<div class="row">
+    <!-- Categorías al costado -->
+    <aside class="col-md-3 mb-4">
+        <div class="card shadow-sm rounded-4">
+            <div class="card-header text-white fw-bold" style="background-color: #6f42c1;">
+                Categorías
+            </div>
+            <ul class="list-group list-group-flush">
+            {% for category in categories %}
+            <li class="list-group-item">
+                <a href="{% url 'products:products_by_category' category.id %}" 
+                    class="text-decoration-none text-dark">
+                    {{ category.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
+    </aside>
 
-    <div class="d-flex justify-content-center gap-3 mt-3">
-        <a href="{% url 'products:list_products' %}" class="btn btn-primary btn-lg">
-            📦 Ver Productos
-        </a>
-        <a href="{% url 'products:create_product' %}" class="btn btn-success btn-lg">
-            ➕ Crear Producto
-        </a>
+    <!-- Contenido principal -->
+    <div class="col-md-9">
+        <!-- Carrusel -->
+        <div id="mainCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-4 shadow-sm">
+                <div class="carousel-item active">
+                    <img src="https://img.freepik.com/foto-gratis/arreglo-coleccion-estacionaria-moderna_23-2149309648.jpg"
+                            class="d-block w-100"
+                            alt="Ofertas Tecnología"
+                            style="height: 300px; object-fit: cover; border-radius: 10px;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>💻 Ofertas en Tecnología</h5>
+                        <p>Descubre laptops, audífonos y más.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80"
+                            class="d-block w-100"
+                            alt="Moda y Estilo"
+                            style="height: 300px; object-fit: cover; border-radius: 10px;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>👗 Moda y Estilo</h5>
+                        <p>Encuentra ropa y accesorios a la moda.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=1200&q=80"
+                            class="d-block w-100"
+                            alt="Hogar y Decoración"
+                            style="height: 300px; object-fit: cover; border-radius: 10px;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>🏡 Hogar y Decoración</h5>
+                        <p>Haz de tu casa el mejor lugar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+
+        <!-- Productos destacados -->
+        <h3 class="mb-3">✨ Productos destacados</h3>
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="{{ product.images.0 }}" class="card-img-top" alt="{{ product.title }}"
+                            style="height:200px; object-fit:cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="fw-bold text-success mt-auto">${{ product.price }}</p>
+                        <a href="{% url 'products:product_detail' product.id %}" 
+                            class="btn btn-sm btn-outline-primary">👁 Ver más</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">⚠️ No hay productos destacados para mostrar.</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
+
+
+
