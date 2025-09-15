@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="max-width: 500px; border-radius: 20px;">
+        <div class="text-center mb-4">
+            <!-- Icono de perfil -->
+            <div class="profile-icon mb-3">
+                <i class="fas fa-user-circle fa-6x text-purple"></i>
+            </div>
+            <h2 class="mb-0">{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="text-muted">{{ user.username }}</p>
+        </div>
+
+        <div class="list-group list-group-flush">
+            <div class="list-group-item d-flex align-items-center">
+                <i class="fas fa-user me-3 text-purple"></i>
+                <strong>Usuario:</strong> <span class="ms-2">{{ user.username }}</span>
+            </div>
+            <div class="list-group-item d-flex align-items-center">
+                <i class="fas fa-id-badge me-3 text-purple"></i>
+                <strong>Nombre:</strong> <span class="ms-2">{{ user.first_name }} {{ user.last_name }}</span>
+            </div>
+            <div class="list-group-item d-flex align-items-center">
+                <i class="fas fa-envelope me-3 text-purple"></i>
+                <strong>Email:</strong> <span class="ms-2">{{ user.email }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.text-purple { color: #6f42c1; }
+.btn-purple {
+    background: linear-gradient(135deg, #6f42c1, #764ba2);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+.btn-purple:hover {
+    background: linear-gradient(135deg, #764ba2, #6f42c1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+}
+.profile-icon {
+    color: #6f42c1;
+}
+.list-group-item {
+    border: none;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.list-group-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(111,66,193,0.2);
+}
+</style>
+{% endblock %}
+
+

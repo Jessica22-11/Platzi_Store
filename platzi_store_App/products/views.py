@@ -1,4 +1,6 @@
+import requests
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -38,6 +40,7 @@ def home(request):
     })
 
 
+@login_required(login_url='accounts:login')
 def list_products(request):
     try:
         response = requests.get(f"{base_url}", timeout=10)
@@ -62,8 +65,7 @@ def list_products(request):
             "error": f"⚠️ Error inesperado: {str(e)}"
         })
 
-
-@csrf_exempt
+@login_required(login_url='accounts:login')
 def create_product(request):
     # 1. Pedir las categorías a la API
     try:
@@ -108,7 +110,7 @@ def create_product(request):
 
     return render(request, "create_product.html", {"form": form})
 
-@csrf_exempt
+@login_required(login_url='accounts:login')
 def update_product(request, product_id):
     # 1. Obtener producto actual
     response = requests.get(f"{base_url}/{product_id}")
@@ -163,7 +165,7 @@ def update_product(request, product_id):
     return render(request, "update_product.html", {"form": form, "product": product_data})
 
 
-@csrf_exempt
+@login_required(login_url='accounts:login')
 def delete_product(request, product_id):
     if request.method == "POST":
         url = f"https://api.escuelajs.co/api/v1/products/{product_id}"
@@ -175,56 +177,6 @@ def delete_product(request, product_id):
             messages.error(request, "⚠️ No se pudo eliminar el producto.")
 
     return redirect("products:list_products")
-
-def search_products(request):
-    query = request.GET.get("q", "").strip()
-    results = []
-    error = None
-
-    if query:
-        try:
-            if query.isdigit():
-                response = requests.get(f"{base_url}/{query}", timeout=10)
-                if response.status_code == 200:
-                    product = response.json()
-                    results = [product] 
-                elif response.status_code == 404:
-                    error = "❌ No se encontró ningún producto con ese ID."
-                else:
-                    error = f"⚠️ Error en la API: {response.status_code}"
-        except requests.exceptions.Timeout:
-            error = "⏱ Tiempo de espera agotado."
-        except requests.exceptions.ConnectionError:
-            error = "❌ Error de conexión."
-        except Exception as e:
-            error = f"⚠️ Error inesperado: {str(e)}"
-
-    return render(request, "search_results.html", {
-        "query": quecmry,
-        "results": results,
-        "error": error,
-    })
-
-def product_detail(request, product_id):
-    try:
-        response = requests.get(f"{base_url}/{product_id}", timeout=10)
-        if response.status_code == 200:
-            product = response.json()
-            return render(request, "product_detail.html", {"product": product})
-        elif response.status_code == 404:
-            return render(request, "product_detail.html", {
-                "error": "❌ Producto no encontrado."
-            })
-        else:
-            return render(request, "product_detail.html", {
-                "error": f"⚠️ Error en la API: {response.status_code}"
-            })
-
-    except requests.exceptions.RequestException:   
-        return render(request, "product_detail.html", {
-            "error": "❌ Error de conexión con la API."
-        })
-
 
 def products_by_category(request, category_id):
     url = f"https://api.escuelajs.co/api/v1/categories/{category_id}/products"
